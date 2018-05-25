@@ -1,0 +1,3 @@
+[submodule "delta_scraper"]
+	path = delta_scraper
+	url = https://github.com/JonasRSV/delta_scraper
