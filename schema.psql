@@ -1,0 +1,15 @@
+DROP TABLE DOCUMENTS;
+
+CREATE TABLE DOCUMENTS (
+    ID varchar(255) PRIMARY KEY,
+    TIME DATE NOT NULL,
+    TITLE TEXT NOT NULL,
+    DOCUMENT TEXT NOT NULL
+);
+
+-- Får implementera någon riktig grej sen som dynamiskt skapar användare eller nått
+CREATE USER SCRAPERS WITH PASSWORD '123';
+
+-- Kan inte Revoka Drop commandot :/ men tror inte de kan droppa endå?
+REVOKE DELETE, UPDATE ON TABLE DOCUMENTS FROM SCRAPERS;
+GRANT INSERT ON TABLE DOCUMENTS TO SCRAPERS;
