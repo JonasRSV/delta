@@ -1,0 +1,13 @@
+click==6.7
+configparser==3.5.0
+Flask==1.0.2
+greenlet==0.4.13
+itsdangerous==0.24
+Jinja2==2.10
+MarkupSafe==1.0
+msgpack==0.5.6
+psycopg2==2.7.4
+Werkzeug==0.14.1
+
+
+# neovim==0.2.6
