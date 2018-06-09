@@ -1,2 +1,4 @@
 db/*
 .venv
+__pycache__/
+database/volume/*
