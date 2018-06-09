@@ -94,11 +94,6 @@ CREATE TABLE POLITICIAN (
     NAME TEXT
 );
 
-
-
-
-
-
 -- Får implementera någon riktig grej sen som dynamiskt skapar användare eller nått
 CREATE USER SCRAPERS WITH PASSWORD '123';
 
