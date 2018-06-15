@@ -3,17 +3,28 @@ services:
   database:
     restart: always
     build: database
+      context: database/
+      dockerfile: Dockerfile
     ports:
       - "5432:5432"
     volumes:
       - database/volume:/var/lib/postgresq/data
   scraper:
     restart: always
-    build: delta_scraper
+    build: 
+      context: delta_scraper/
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
   website:
     restart: always
-    build: www
+    build: 
+      context: www/
+      dockerfile: Dockerfile
+  server:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
 
 
