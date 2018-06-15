@@ -1,2 +1,6 @@
+.ropeproject
 db/*
 .venv
+delta/__pycache__/*
+__pycache__/*
+database/volume/*

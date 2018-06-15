@@ -1,53 +1,28 @@
 import flask
-import delta.database
+from delta.connection import Connection
 from delta.config import config
-import json
+from delta.request.document import Document
 import sys
+import datetime
 
-DB = delta.database.Connection(config)
+
+DB = Connection(config)
 DB.connect()
 
 
-class Document(object):
-    """Document request object."""
+class Request(object):
 
-    def __init__(self, id, type, date, limit):
-        self.id    = id
-        self.type  = type
-        self.date  = date
-        self.limit = limit
+    def __init__(self, type, data):
+        self.type = type
+        self.data = data
 
-        self.payload = None
-        self.sz = None
-        self.json = None
-
-    def set_payload(self, payload):
-        self.payload = payload
-        self.sz = len(payload)
-
+    def set_type(self, type):
+        self.type = type
         return self
 
-    def parse_response(self, cell):
-        return {  "id":       cell[0]
-                , "date":     str(cell[1])
-                , "title":    cell[2]
-                , "document": cell[3]
-               }
-
-
-    def jsonify(self):
-        try:
-            self.json = json.dumps({n: self.parse_response(response) for n, response
-                                   in zip(range(self.sz), self.payload)})
-        except Exception as e:
-            """Add error handling."""
-            print("Failed to parse json {}".format(str(e)))
-            sys.exit(1)
-
-        return self.json
-
-
-
+    def set_data(self, data):
+        self.data = data
+        return self
 
 content = flask.Blueprint("Content handler", __name__)
 
@@ -60,8 +35,14 @@ def get_documents():
     date  = flask.request.args.get("date")
     limit = flask.request.args.get("limit")
 
-    request  = Document(id, type, date, limit)
-    response = DB.request_documents(request)
+    if date is None:
+        date = datetime.datetime.today().strftime('%Y-%m-%d')
+
+    if type is None:
+        type = Document.identifier
+
+    request  = Request(type, Document(id, type, date, limit))
+    response = DB.request(request)
 
     return flask.Response(response.jsonify(), status=200)
 

@@ -1,16 +1,13 @@
 import psycopg2
 import sys
+from delta.database.motion import Motion
+from delta.database.document import Document
+
 
 
 class Connection(object):
     """DB Connection handler."""
     
-    DOC_ID_OR_TYPE =   "SELECT * FROM DOCUMENTS WHERE %s LIKE ID AND "\
-                     + "TIME > %s LIMIT %s;"
-
-    DOC_REGULAR    =   "SELECT * FROM DOCUMENTS WHERE TIME > %s LIMIT %s;"
-
-
     def __init__(self, config):
         self.config = config
         self.connection = None
@@ -21,7 +18,10 @@ class Connection(object):
                    , config["database"]["user"]
                    , config["database"]["password"])
 
-        self.cursor = None
+        self.cursor   = None
+
+        self.handlers = { "document": Document.request
+                        , "mot"  : Motion.request}
 
     def connect(self):
         """Connect to database."""
@@ -49,38 +49,16 @@ class Connection(object):
 
         return None
 
-    def request_documents(self, doc_request):
+    def request(self, request):
         """Get documents according to doc_request specification."""
         self.check_connection()
 
-        limit = doc_request.limit
-        if limit is None:
-            limit = 10000
+        if request.type in self.handlers:
+            return self.handlers[request.type](self.cursor, request.data)
+        else:
+            raise NotImplementedError("Don't regonize request {}".format(self.type))
 
-        try:
-            if doc_request.id is None and doc_request.type is None:
-                self.cursor.execute(  Connection.DOC_REGULAR
-                                   , (doc_request.date, limit))
-
-                return doc_request.set_payload(self.cursor.fetchall())
-
-            if not doc_request.id is None:
-                self.cursor.execute(  Connection.DOC_ID_OR_TYPE
-                                   ,  (doc_request.id, doc_request.date, limit))
-
-                return doc_request.set_payload(self.cursor.fetchall())
-
-            self.cursor.execute(  Connection.DOC_ID_OR_TYPE
-                               ,  (doc_request.type, doc_request.date, limit))
-
-            return doc_request.set_payload(self.cursor.fetchall())
-        except Exception as e:
-            print(e)
-            """Add error handling."""
-            print("Failed to get requested document: {}".format(str(e)))
-            sys.exit(1)
-
-        return None
+        return request
 
 
 
