@@ -29,3 +29,12 @@ echo "Building server image and container ..."
 sh build.sh
 
 
+echo "\n\n\n"
+
+docker swarm init
+
+echo "Ignore This error if there is one... :)"
+
+echo "\n\n\n"
+echo "All Done."
+
