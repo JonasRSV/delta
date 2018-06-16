@@ -5,3 +5,4 @@ delta/__pycache__/*
 __pycache__/*
 database/volume/*
 *.DS_Store
+logs/server.log

@@ -1,6 +1,6 @@
 import json
-from delta.request.motion import Motion
-from delta.request.generic import Generic
+from delta.api.documents.motion import Motion
+from delta.api.documents.generic import Generic
 import sys
 
 class Document(object):

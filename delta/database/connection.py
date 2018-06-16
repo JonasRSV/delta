@@ -1,8 +1,24 @@
 import psycopg2
 import sys
-from delta.database.motion import Motion
-from delta.database.document import Document
+from delta.database.documents.motion import Motion
+from delta.database.documents.document import Document
+from delta.config import write_server_log
+import time
 
+
+class Request(object):
+
+    def __init__(self, type, data):
+        self.type = type
+        self.data = data
+
+    def set_type(self, type):
+        self.type = type
+        return self
+
+    def set_data(self, data):
+        self.data = data
+        return self
 
 
 class Connection(object):
@@ -23,14 +39,20 @@ class Connection(object):
         self.handlers = { "document": Document.request
                         , "mot"  : Motion.request}
 
+        self.connect()
+
     def connect(self):
         """Connect to database."""
-        try:
-            self.connection = psycopg2.connect(self.connection_string)
-        except Exception as e:
-            """Need to add some error handling."""
-            print("DB connection failed. {}".format(str(e)))
-            sys.exit(1)
+        while True:
+            try:
+                self.connection = psycopg2.connect(self.connection_string)
+                write_server_log("Connection to database successful!")
+                break
+            except Exception as e:
+                write_server_log("Unable to connect to database, reason: {}".format(str(e)))
+                time.sleep(5)
+
+
 
         """Commit after each command."""
         self.connection.set_session(autocommit=True)
@@ -56,7 +78,7 @@ class Connection(object):
         if request.type in self.handlers:
             return self.handlers[request.type](self.cursor, request.data)
         else:
-            raise NotImplementedError("Don't regonize request {}".format(self.type))
+            raise NotImplementedError("Don't recognize request {}".format(self.type))
 
         return request
 

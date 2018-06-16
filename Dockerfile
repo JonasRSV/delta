@@ -3,6 +3,7 @@ FROM python:3.6-stretch
 WORKDIR /server/
 ADD delta.config .
 COPY delta delta/
+COPY logs/ logs/
 ADD delta.py .
 ADD requirements.txt .
 ADD __init__.py .
