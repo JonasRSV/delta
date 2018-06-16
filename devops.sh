@@ -1,9 +1,13 @@
 
 function help {
   echo "Build Script For Delta\n\n"
+  echo "-h help"
   echo "-b {build} [server, scraper, proxy, database, all]"
   echo "-r {run} [server, scraper, proxy, database, all]"
-  echo "-d deploy stack\n"
+  echo "-d deploy stack"
+  echo "-u update submodules"
+
+  echo "\nIncase of extreme distress [-u force] will force update sub repos, use with great caution."
 }
 
 function build_server {
@@ -60,11 +64,20 @@ function update_submodules {
 }
 
 function force_update_submodules {
-  git rm delta_scraper
-  git submodule add https://github.com/JonasRSV/delta_scraper.git delta_scraper
+  echo "There is no going back now..."
+  if [ -d "delta_scraper" ]; then
+    git rm delta_scraper -f
+  fi
 
-  git rm www/delta_frontend
-  git submodule add https://github.com/Pranz/delta_frontend.git www/delta_frontend
+  git submodule add --force https://github.com/JonasRSV/delta_scraper.git 
+
+  if [ -d "www/delta_frontend" ]; then
+    git rm www/delta_frontend -f
+  fi
+
+  cd www
+  git submodule add --force https://github.com/Pranz/delta_frontend.git 
+  cd ..
 }
 
 BUILD_TARGETS=()
