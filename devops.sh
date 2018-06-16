@@ -1,3 +1,7 @@
+# database port 5432
+# scarper logs 8000
+# server port  5000
+# website port 80
 
 BASE=`basename $(pwd)`
 
