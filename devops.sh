@@ -1,4 +1,12 @@
 
+BASE=`basename $(pwd)`
+
+
+if [[ ! "$BASE" == "delta" ]]; then
+  echo "You're in the wrong directory."
+  echo "Please make sure delta is your base directory."
+fi
+
 function help {
   echo "Build Script For Delta\n\n"
   echo "-h help"
@@ -172,7 +180,7 @@ for run_target in ${RUN_TARGETS[*]}
   done;
 
 
-if [ "${DEPLOY}" == "1" ]
+if [[ "${DEPLOY}" == "1" ]]
 then
   echo "Deploying on stack delta..."
   docker swarm init
