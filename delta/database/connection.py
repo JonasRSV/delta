@@ -24,8 +24,9 @@ class Request(object):
 class Connection(object):
     """DB Connection handler."""
     
-    def __init__(self, config):
+    def __init__(self, config, name):
         self.config = config
+        self.name   = name
         self.connection = None
         self.connection_string = "host={} dbname={} port={} user={} password={}"\
             .format( config["database"]["host"]
@@ -46,10 +47,10 @@ class Connection(object):
         while True:
             try:
                 self.connection = psycopg2.connect(self.connection_string)
-                write_server_log("Connection to database successful!")
+                write_server_log("Connection to database successful! {}".format(self.name))
                 break
             except Exception as e:
-                write_server_log("Unable to connect to database, reason: {}".format(str(e)))
+                write_server_log("Unable to connect to database from {}, reason: {}".format(self.name, str(e)))
                 time.sleep(5)
 
 

@@ -7,7 +7,7 @@ import sys
 import datetime
 
 
-DB = connection.Connection(config)
+DB = connection.Connection(config, "document")
 document_bp = flask.Blueprint("Document handler", __name__)
 
 @document_bp.route("/documents", methods=["GET"])
