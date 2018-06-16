@@ -24,6 +24,8 @@ services:
       #context: www/
       #dockerfile: Dockerfile
     image: delta_proxy
+    ports:
+      - "80:80"
   server:
     #restart: always
     #build:
