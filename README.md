@@ -21,13 +21,14 @@ https://docs.docker.com/docker-for-windows/install/
 ## Deploying
 1. sh devops.sh -d
 
+(Visit 0.0.0.0 to see if everything went alrite)
+(And   0.0.0.0:5000 to see if server is up)
+
 ## KNOWN ISSUES
 #### Sometimes the database does not run the schema file. 
 RUN: psql -h 0.0.0.0 -p 5432 -d delta -U postgres
 and add the schema manually with \i SCHEMA\_NAME\_HERE
 
-(Visit 0.0.0.0 to see if everything went alrite)
-(And   0.0.0.0:5000 to see if server is up)
 
 ---
 
