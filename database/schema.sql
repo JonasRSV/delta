@@ -15,23 +15,39 @@ $$ LANGUAGE SQL;
 -- USER is a reserved keyword
 CREATE TABLE USERS (
     ID UUID PRIMARY KEY DEFAULT uuid_generate_v1mc(),
-    NAME VARCHAR(255) DEFAULT DEFAULT_NAME(),
-    PW_HASH VARCHAR(255),
-    EMAIL VARCHAR(255),
+    -- Unique ID for user
 
-    -- To remove if it's a temp user after inactivity.
+    NAME VARCHAR(255) DEFAULT DEFAULT_NAME(),
+    -- Name of user
+
+    PW_HASH VARCHAR(255),
+    -- Hashed password
+
+    EMAIL VARCHAR(255),
+    -- Email of user
+
+    TOKEN VARCHAR(255),
+    -- Session Token
+
     LAST_LOGIN DATE
+    -- To remove if it's a temp user after inactivity.
 );
 
 CREATE TABLE POST (
     ID UUID PRIMARY KEY,
-    TIME DATE NOT NULL,
-    TITLE TEXT NOT NULL,
+    -- Id of post
 
-    -- POSTGRESS SUPPORTS STORING JSON
+    TIME DATE NOT NULL,
+    -- Time of Creation
+
+    TITLE TEXT NOT NULL,
+    -- Post Title
+
     CONTENT JSONB NOT NULL,
+    -- POSTGRESS SUPPORTS STORING JSON
 
     OWNER UUID REFERENCES users (id)
+    -- Owner of Post
 );
 
 
