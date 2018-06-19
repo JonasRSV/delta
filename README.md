@@ -31,25 +31,35 @@ https://docs.docker.com/docker-for-windows/install/
 #### PURPOSE
 serve static files
 
+---
+
 
 #### PATH: /posts/create
 #### PURPOSE
 create posts
+
+---
 
 
 #### PATH: /posts/....
 #### PURPOSE
 get posts located at path ....
 
+---
+
 
 #### PATH: /user/login
 #### PURPOSE
 login and recieve a session token
 
+---
+
 
 #### PATH: /user/logout
 #### PURPOSE
 logout and invalidate session token
+
+---
 
 
 #### PATH /logs/server.log
