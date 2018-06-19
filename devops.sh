@@ -26,7 +26,7 @@ function build_server {
   echo "\nBuilding Server..."
   docker rm delta_server
   docker build -t delta_server server/
-  docker create --name delta_server -p 8080:8080 delta_server
+  docker create --name delta_server -p 5000:5000 delta_server
 }
 
 function build_database {
