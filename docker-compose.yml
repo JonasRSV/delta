@@ -1,19 +1,30 @@
 version: '3'
 services: 
   database:
-    restart: always
-    build: database
+    #restart: always
+    #build: 
+      #context: database/
+      #dockerfile: Dockerfile
+    image: delta_database
     ports:
       - "5432:5432"
     volumes:
-      - database/volume:/var/lib/postgresq/data
-  scraper:
-    restart: always
-    build: delta_scraper
-    ports:
-      - "8000:8000"
+      - ./database/volume:/var/lib/postgresq/data
   website:
-    restart: always
-    build: www
+    #restart: always
+    #build: 
+      #context: www/
+      #dockerfile: Dockerfile
+    image: delta_proxy
+    ports:
+      - "80:80"
+  server:
+    #restart: always
+    #build:
+      #context: .
+      #dockerfile: Dockerfile
+    image: delta_server
+    ports:
+      - "5000:5000"
 
 
