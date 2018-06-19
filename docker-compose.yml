@@ -10,14 +10,6 @@ services:
       - "5432:5432"
     volumes:
       - ./database/volume:/var/lib/postgresq/data
-  scraper:
-    #restart: always
-    #build: 
-      #context: delta_scraper/
-      #dockerfile: Dockerfile
-    image: delta_scraper
-    ports:
-      - "8000:8000"
   website:
     #restart: always
     #build: 

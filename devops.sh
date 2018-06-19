@@ -25,7 +25,7 @@ function help {
 function build_server {
   echo "\nBuilding Server..."
   docker rm delta_server
-  docker build -t delta_server .
+  docker build -t delta_server server/
   docker create --name delta_server -p 8080:8080 delta_server
 }
 
@@ -39,15 +39,8 @@ function build_database {
 function build_proxy {
   echo "\nBuilding Proxy..."
   docker rm delta_proxy
-  docker build -t delta_proxy www/
+  docker build -t delta_proxy proxy/
   docker create --name delta_proxy -p 80:80 -v$(pwd)/www/nginx.conf:/etc/nginx/nginx.conf delta_proxy
-}
-
-function build_scraper {
-  echo "\nBuilding Scraper..."
-  docker rm delta_scraper
-  docker build -t delta_scraper delta_scraper/
-  docker create --name delta_scraper -p 8000:8000 delta_scraper
 }
 
 function run_server {
@@ -65,31 +58,18 @@ function run_proxy {
   docker start delta_proxy
 }
 
-function run_scraper {
-  echo "Starting Scraper..."
-  docker start delta_scraper
-}
-
 function update_submodules {
   git pull
   git submodule update --recursive --remote
 }
 
 function force_update_submodules {
-  echo "There is no going back now..."
-  if [ -d "delta_scraper" ]; then
-    git rm delta_scraper -f
+
+  if [ -d "delta_frontend" ]; then
+    git rm delta_frontend -f
   fi
 
-  git submodule add --force https://github.com/JonasRSV/delta_scraper.git 
-
-  if [ -d "www/delta_frontend" ]; then
-    git rm www/delta_frontend -f
-  fi
-
-  cd www
   git submodule add --force https://github.com/Pranz/delta_frontend.git 
-  cd ..
 }
 
 BUILD_TARGETS=()
@@ -135,9 +115,6 @@ for build_target in ${BUILD_TARGETS[*]}
       server)
         build_server
       ;;
-      scraper) 
-        build_scraper
-      ;;
       proxy)
         build_proxy
       ;;
@@ -148,7 +125,6 @@ for build_target in ${BUILD_TARGETS[*]}
         build_server
         build_proxy
         build_database
-        build_scraper
       ;;
       *)
         echo "Unknown Build Option: ${build_target}" 
@@ -161,9 +137,6 @@ for run_target in ${RUN_TARGETS[*]}
     case $run_target in
       server)
         run_server
-      ;;
-      scraper) 
-        run_scraper
       ;;
       proxy)
         run_proxy

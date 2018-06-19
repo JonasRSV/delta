@@ -1,10 +1,19 @@
-## Server for delta
+# Delta
 
 Working with submodules: https://git-scm.com/book/en/v2/Git-Tools-Submodules
 
+## Requirements 
+1. Docker
 
-## Installing
-1. Install Docker on your computer
+## Installation
+### Mac
+https://docs.docker.com/docker-for-mac/install/
+
+### Linux
+https://docs.docker.com/install/linux/docker-ce/ubuntu/
+
+### Windows
+https://docs.docker.com/docker-for-windows/install/
 
 ## Building
 1. sh devops.sh -b all
@@ -12,8 +21,9 @@ Working with submodules: https://git-scm.com/book/en/v2/Git-Tools-Submodules
 ## Deploying
 1. sh devops.sh -d
 
+(Visit 0.0.0.0 to see if everything went alrite)
 
-
+---
 
 ## API
 
@@ -32,20 +42,19 @@ create posts
 get posts located at path ....
 
 
-#### PATH: /profile/login
+#### PATH: /user/login
 #### PURPOSE
 login and recieve a session token
 
 
-#### PATH: /profile/logout
+#### PATH: /user/logout
 #### PURPOSE
 logout and invalidate session token
 
 
-#### PATH: /documents
+#### PATH /logs/server.log
 #### PURPOSE
-get documents of all types
-#### URL PARAMS: id (doc id) type (doc type) date (documents from) limit (max response)
+monitor server health and general debug
 
 
 

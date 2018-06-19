@@ -1,6 +1,3 @@
-[submodule "www/delta_frontend"]
-	path = www/delta_frontend
+[submodule "delta_frontend"]
+	path = delta_frontend
 	url = https://github.com/Pranz/delta_frontend.git
-[submodule "delta_scraper"]
-	path = delta_scraper
-	url = https://github.com/JonasRSV/delta_scraper.git
