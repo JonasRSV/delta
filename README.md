@@ -22,12 +22,14 @@ https://docs.docker.com/docker-for-windows/install/
 1. sh devops.sh -d
 
 (Visit 0.0.0.0 to see if everything went alrite)
+(And   0.0.0.0:5000 to see if server is up)
 
 ---
 
 ## API
 
 #### PATH: /
+#### TYPE: GET
 #### PURPOSE
 serve static files
 
@@ -35,36 +37,115 @@ serve static files
 
 
 #### PATH: /posts/create
+#### TYPE: POST
 #### PURPOSE
 create posts
+#### BODY
+{
+  "token": "...",
+  "post" : "..."
+}
+#### RETURNS
+STATUS
 
 ---
 
 
 #### PATH: /posts/....
+#### TYPE: GET
 #### PURPOSE
 get posts located at path ....
+#### BODY
+EMPTY
+#### RETURNS
+POST (Nothing atm)
 
 ---
 
 
 #### PATH: /user/login
+#### TYPE: POST
 #### PURPOSE
 login and recieve a session token
+#### BODY
+{
+  "user": "...",
+  "password": "..."
+}
+#### RETURNS
+SESSION TOKEN
 
 ---
 
 
 #### PATH: /user/logout
+#### TYPE: POST
 #### PURPOSE
 logout and invalidate session token
+#### BODY
+{
+  "token": "..."
+}
+#### RETURNS
+STATUS
+
+---
+
+#### PATH: /like
+#### TYPE: POST
+#### PURPOSE
+Like something, a post or a comment
+#### BODY
+UNDEFINED
+#### RETURNS
+STATUS
+
+---
+
+#### PATH: /annotate
+#### TYPE: POST
+#### PURPOSE
+Annotate a post
+#### BODY
+UNDEFINED
+#### RETURNS
+STATUS
+
+---
+
+#### PATH: /comment
+#### TYPE: POST
+#### PURPOSE
+Comment something, a post or a comment
+#### BODY
+UNDEFINED
+#### RETURNS
+STATUS
+
 
 ---
 
 
 #### PATH /logs/server.log
+#### TYPE: GET
 #### PURPOSE
 monitor server health and general debug
+#### BODY
+EMPTY
+#### RETURNS
+server log text
+
+----
+
+#### PATH /logs/
+#### TYPE: GET
+#### PURPOSE
+debuggin / info
+#### BODY
+EMPTY
+#### RETURNS
+Logging information
+
 
 
 
