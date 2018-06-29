@@ -23,7 +23,10 @@ def login():
     except Exception as e:
         config.write_server_log("Unable to parse login request: {}"\
                 .format(str(e)))
-        return flask.Response("Malformed post body", status=500)
+
+        response = { "success": False, "token": None, "message": "Malformed request" }
+        response = json.dumps(response)
+        return flask.Response(response, status=500, mimetype="application/json")
 
 
     password_hash  = config.sign_password(password)
@@ -36,7 +39,10 @@ def login():
         token    = config.issue_token(user_id)
     except Exception as e:
         config.write_server_log("Unable to login, reason: {}".format(str(e)))
-        return flask.Response("Login Failed, Server Error", status=500)
+
+        response = { "success": False, "token": None, "message": "Server Error" }
+        response = json.dumps(response)
+        return flask.Response(response, status=500, mimetype="application/json")
 
     query  = connection.Request("update_token", INSERT_TOKEN, (token, user_id))
     try:
@@ -44,9 +50,14 @@ def login():
     except Exception as e:
         config.write_server_log("Failed to Login, Session Update failed: {}"\
                 .format(str(e)))
+
+        response = { "success": False, "token": None, "message": "Server Error" }
+        response = json.dumps(response)
         return flask.Response("Login Failed, Server Error", status=500)
 
-    return flask.Response(token, status=200)
+    response = { "success": True, "token": token, "message": "Welcome!" }
+    response = json.dumps(response)
+    return flask.Response(response, status=200, mimetype="application/json")
 
 
 @users.route("/profile/logout", methods=["POST"])
@@ -58,14 +69,20 @@ def logout():
         session_token = session_token["token"]
     except Exception as e:
         config.write_server_log("Unable to parse logout request: {}".format(str(e)))
-        return flask.Response("Malformed post body", status=500)
+
+        response = { "success": False, "token": None, "message": "Malformed request" }
+        response = json.dumps(response)
+        return flask.Response(response, status=500, mimetype="application/json")
 
     user_id = None
     try:
         user_id, expired = config.decode_token(session_token)
     except Exception as e:
         config.write_server_log("Invalid Token, Cannot Log Out: {}".format(str(e)))
-        return flask.Response("Logout Failed", status=500)
+
+        response = { "success": False, "token": token, "message": "Logout Failed" }
+        response = json.dumps(response)
+        return flask.Response(response, status=500, mimetype="application/json")
 
     if not expired:
         query = connection.Request("update_token", INSERT_TOKEN, ("None", user_id))
@@ -75,9 +92,14 @@ def logout():
         except Exception as e:
             config.write_server_log("Failed to Logout, Session Update Failed: {}"\
                     .format(str(e)))
-            return flask.Response("Logout Failed, Server Error", status=500)
+
+            response = { "success": False, "token": token, "message": "Logout Failed" }
+            response = json.dumps(response)
+            return flask.Response(response, status=500, mimetype="application/json")
         
-    return flask.Response("Good Bye, Please Come Again.", status=200)
+    response = { "success": True, "token": None, "message": "Thank you! Come again!" }
+    response = json.dumps(response)
+    return flask.Response(response, status=200, mimetype="application/json")
 
 
 @users.route("/profile/create", methods=["POST"])
@@ -94,19 +116,25 @@ def create():
         email    = login_information["email"]
     except Exception as e:
         config.write_server_log("Unable to parse create request: {}".format(str(e)))
-        return flask.Response("Malformed post body", status=500)
+
+        response = { "success": False, "message": "Malformed post body" }
+        response = json.dumps(response)
+        return flask.Response(response, status=500, mimetype="application/json")
 
     password_hash  = config.sign_password(password)
 
-    print(password_hash)
-    
     query = connection.Request("create_user", CREATE, (user, password_hash, email))
 
     try:
         DB.request(query)
     except Exception as e:
         config.write_server_log("Failed to Create User: {}".format(str(e)))
-        return flask.Response("User with Email already exists", status=500)
 
-    return flask.Response("Welcome Friend.", status=200)
+        response = { "success": False, "message": "User with Email already exists" }
+        response = json.dumps(response)
+        return flask.Response(response, status=500, mimetype="application/json")
+
+    response = { "success": True, "message": "Welcome to the club!" }
+    response = json.dumps(response)
+    return flask.Response(response, status=200)
 

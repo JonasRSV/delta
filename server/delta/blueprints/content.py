@@ -19,9 +19,17 @@ def create_post():
         post_information  = request_data["post"]
     except Exception as e:
         config.write_server_log("Unable to parse post request: {}".format(str(e)))
-        return flask.Response("Malformed post body", status=500)
+        response = { "success": False, "expired": None, "post": None }
+        return flask.Response(response, status=500, mimetype="application/json")
 
-    return flask.Response("Totally added post", status=200)
+    token, expired = config.decode_token(session_token)
+
+    if expired:
+        response = { "success": False, "expired": expired, "post": post_information }
+        return flask.Response(response, status=500, mimetype="application/json")
+
+    response = { "success": True, "expired": expired, "post": post_information }
+    return flask.Response(response, status=200, mimetype="application/json")
 
 
 @content.route("/posts/", defaults={"path": "main"})
