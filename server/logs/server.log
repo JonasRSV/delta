@@ -18,3 +18,285 @@ Connection to database successful! Content       --
 Connection to database successful! Users       --
 Connection to database successful! Content       --
 Connection to database successful! Users       --
+Unable to connect to database from Content, reason: could not translate host name "database" to address: nodename nor servname provided, or not known
+       --
+Unable to connect to database from Content, reason: could not translate host name "database" to address: nodename nor servname provided, or not known
+       --
+Unable to connect to database from Content, reason: could not translate host name "database" to address: nodename nor servname provided, or not known
+       --
+Unable to connect to database from Content, reason: could not translate host name "database" to address: nodename nor servname provided, or not known
+       --
+Unable to connect to database from Content, reason: could not translate host name "database" to address: nodename nor servname provided, or not known
+       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to login, reason: column "cookie" does not exist
+LINE 1: SELECT ID FROM USERS WHERE USERS.NAME = Cookie AND USERS.PW_...
+                                                ^
+       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to login, reason: column "cookie" does not exist
+LINE 1: SELECT ID FROM USERS WHERE USERS.NAME = Cookie AND USERS.PW_...
+                                                ^
+       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to login, reason: column "Cookie" does not exist
+LINE 1: SELECT ID FROM USERS WHERE USERS.NAME = "Cookie" AND USERS.P...
+                                                ^
+       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to login, reason: permission denied for relation users
+       --
+Unable to login, reason: Login request failed.       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to login, reason: Login request failed.       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Failed to Create User: no results to fetch       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Failed to Create User: 'Request' object has no attribute 'fetcher'       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Failed to Create User: no results to fetch       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Failed to Create User: <lambda>() takes 0 positional arguments but 1 was given       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Failed to Create User: duplicate key value violates unique constraint "users_email_key"
+DETAIL:  Key (email)=(cookie.monster@zombieland.zom) already exists.
+       --
+Failed to Create User: duplicate key value violates unique constraint "users_email_key"
+DETAIL:  Key (email)=(cookie.monster@zombieland.zom) already exists.
+       --
+Unable to parse login request: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)       --
+Unable to login, reason: request() got an unexpected keyword argument 'fetcher'       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to login, reason: 'Connection' object has no attribute 'Request'       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to login, reason: __init__() missing 1 required positional argument: 'query'       --
+Connection to database successful! Content       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to login, reason: Query did not affect any tables.       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to login, reason: Login request failed.       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to login, reason: Login request failed.       --
+Unable to login, reason: Login request failed.       --
+Unable to login, reason: Login request failed.       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Failed to Create User: duplicate key value violates unique constraint "users_email_key"
+DETAIL:  Key (email)=(cookie.monster@zombieland.zom) already exists.
+       --
+Failed to Create User: duplicate key value violates unique constraint "users_email_key"
+DETAIL:  Key (email)=(cookie.monster@zombieland.zom) already exists.
+       --
+Unable to login, reason: Login request failed.       --
+Unable to login, reason: Login request failed.       --
+Unable to login, reason: Login request failed.       --
+Failed to Create User: duplicate key value violates unique constraint "users_email_key"
+DETAIL:  Key (email)=(cookie.monster@zombieland.zom) already exists.
+       --
+Unable to login, reason: module 'jwt' has no attribute 'encode'       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Failed to Create User: duplicate key value violates unique constraint "users_email_key"
+DETAIL:  Key (email)=(cookie.monster@zombieland.zom) already exists.
+       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Failed to Create User: duplicate key value violates unique constraint "users_email_key"
+DETAIL:  Key (email)=(cookie.monster@zombieland.zom) already exists.
+       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Failed to Create User: duplicate key value violates unique constraint "users_email_key"
+DETAIL:  Key (email)=(cookie.monster@zombieland.zom) already exists.
+       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Failed to Create User: syntax error at or near "9196"
+LINE 1: ...USERS (NAME, PW_HASH, EMAIL) VALUES ('Cookie', 'b'9196a3695a...
+                                                             ^
+       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Failed to Create User: syntax error at or near "9196"
+LINE 1: ...USERS (NAME, PW_HASH, EMAIL) VALUES ('Cookie', 'b'9196a3695a...
+                                                             ^
+       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to login, reason: module 'jwt' has no attribute 'encode'       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to login, reason: syntax error at or near "9196"
+LINE 1: ...WHERE USERS.NAME = 'Cookie'' AND USERS.PW_HASH = '9196a3695a...
+                                                             ^
+       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to login, reason: module 'jwt' has no attribute 'encode'       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to login, reason: a RSA private key is required, but passed is RSA public key       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Failed to Login, Session Update failed: value too long for type character varying(255)
+       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --

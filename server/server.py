@@ -3,7 +3,6 @@ from delta.blueprints.content  import content
 from delta.blueprints.logs     import logs
 from delta.blueprints.users    import users
 
-
 app = flask.Flask(__name__)
 
 app.register_blueprint(content)

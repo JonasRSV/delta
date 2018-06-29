@@ -1,0 +1,5 @@
+LOGIN_USER: curl 0.0.0.0:5000/profile/login -X POST -d '{"user": "Cookie", "password": "COOKIE2"}'
+
+
+CREATE_USER: curl 0.0.0.0:5000/profile/create -X POST -d '{"user": "Cookie", "password": "COOKIE2", "email": "cookie.monster@zombieland.zom"}'
+

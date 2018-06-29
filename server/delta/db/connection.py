@@ -3,8 +3,6 @@ import sys
 import config 
 import time
 
-
-
 class Connection(object):
     """DB Connection handler."""
     
@@ -19,8 +17,6 @@ class Connection(object):
                    , config.config["database"]["password"])
 
         self.cursor   = None
-        self.handlers = {}
-
         self.connect()
 
     def connect(self):
@@ -56,20 +52,75 @@ class Connection(object):
     def request(self, request):
         """Get documents according to doc_request specification."""
         self.check_connection()
+        self.cursor.execute(request.query, request.params)
 
-        """Remove this later."""
-        if not hasattr(request, "type"):
-            raise Exception("requests should have a type.")
+        """Need to add validation that request actually succeeded."""
 
-        if request.type in self.handlers:
-            return self.handlers[request.type](self.cursor, request.data)
-        else:
-            raise NotImplementedError("Don't recognize request {}".format(self.type))
+        request.data = request.fetcher(self.cursor)
 
         return request
 
 
+class Request(object):
+
+    def __init__(self, type, query, params, fetcher=lambda _:_):
+        self.__type     = type
+        self.__query    = query
+        self.__params   = params
+
+        self.__data     = None
+        self.fetcher    = fetcher
+
+    @property
+    def data(self):
+        return self.__data
+
+    @property
+    def type(self):
+        return self.__type
+
+    @property
+    def query(self):
+        return self.__query
+
+    @property
+    def params(self):
+        return self.__params
+
+    @data.setter
+    def data(self, data):
+        if self.__data is None:
+            self.__data = data
+        else:
+            raise Exception("Cannot set data that is already set.")
+
+    @query.setter
+    def query(self, query):
+        if self.__query is None:
+            self.__query = query
+        else:
+            raise Exception("Cannot set query that is already set.")
+
+    @type.setter
+    def type(self, type):
+        if self.__type is None:
+            self.__type = type
+        else:
+            raise Exception("Cannot set type that is already set.")
+
+    @params.setter
+    def params(self, params):
+        if self.__params is None:
+            self.__params = params
+        else:
+            raise Exception("Cannot set params that is already set.")
 
 
-    
+    def extract_login(self):
+        if self.data is None:
+            raise Exception("Cannot extract data from None")
 
+        if len(self.data) != 1:
+            raise Exception("Login request failed.")
+
+        return self.data[0]

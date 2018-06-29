@@ -6,3 +6,6 @@ __pycache__/*
 database/volume/*
 *.DS_Store
 logs/server.log
+server/secrets/private.pem
+server/secrets/public.pem
+server/secrets/hash.key
