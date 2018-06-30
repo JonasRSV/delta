@@ -16,3 +16,10 @@ CREATE_COMMENT: curl 0.0.0.0:5000/comment -X POST -d '{"token": TOKEN_HERE, "com
 CREATE_ANNOTATION: curl 0.0.0.0:5000/annotate -X POST -d '{"token": TOKEN_HERE, "annotation": { "target_post": POST_ID_HERE, "target_comment": COMMENT_ID_HERE, "begining": 0, "ending": 30, "color": "#00FF00"}}'
 
 
+GET_POSTS: curl 0.0.0.0:4999/feed -X GET -d '{"limit": 5, "time": "2019-01-02"}'
+
+GET_LIKES: curl 0.0.0.0:4999/like -X GET -d '{"id": ID_HERE, "type": TYPE_HERE}'
+
+GET_COMMENTS: curl 0.0.0.0:4999/comment -X GET -d '{"post_id": ID_HERE}'
+
+GET_ANNOTATIONS: curl 0.0.0.0:4999/annotate -X GET -d '{"post_id": ID_HERE}'
