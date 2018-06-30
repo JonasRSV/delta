@@ -85,13 +85,13 @@ def issue_token(user_id):
     return compact_jws
 
 def decode_token(token):
-    token = jwt_obj.decode_token(token, jwt_key)
+    token = jwt_obj.decode(token, jwt_key)
 
-    expired = True
-    if token["exp"] > time.time():
-        expired = False
+    expired = False
+    if token["exp"] < time.time():
+        expired = True
 
-    return token["sub"], valid
+    return token["sub"], expired
 
 def sign_password(password):
     password = bytes(password, "utf-8")

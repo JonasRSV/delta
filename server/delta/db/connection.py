@@ -115,12 +115,3 @@ class Request(object):
         else:
             raise Exception("Cannot set params that is already set.")
 
-
-    def extract_login(self):
-        if self.data is None:
-            raise Exception("Cannot extract data from None")
-
-        if len(self.data) != 1:
-            raise Exception("Login request failed.")
-
-        return self.data[0]

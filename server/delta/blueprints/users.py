@@ -32,10 +32,10 @@ def login():
     password_hash  = config.sign_password(password)
 
     token = None
-    query = connection.Request("login", LOGIN, (user, password_hash), fetcher=lambda c:c.fetchall())
+    query = connection.Request("login", LOGIN, (user, password_hash), fetcher=lambda c:c.fetchone())
 
     try:
-        user_id  = DB.request(query).extract_login()
+        user_id  = DB.request(query).data[0]
         token    = config.issue_token(user_id)
     except Exception as e:
         config.write_server_log("Unable to login, reason: {}".format(str(e)))

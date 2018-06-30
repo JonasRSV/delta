@@ -304,3 +304,191 @@ Connection to database successful! Content       --
 Connection to database successful! Users       --
 Connection to database successful! Content       --
 Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to parse post request: module 'flask' has no attribute 'request_data'       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to create post, error: can't adapt type 'dict'       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to create post, error: column "owner" is of type uuid but expression is of type text[]
+LINE 1: ..., '{"deltas": 5, "text": "Such Very Cool Post"}', ARRAY['30c...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to create post, error: column "owner" is of type uuid but expression is of type text[]
+LINE 1: ..., '{"deltas": 5, "text": "Such Very Cool Post"}', ARRAY['30c...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+       --
+Unable to create post, error: column "owner" is of type uuid but expression is of type text[]
+LINE 1: ..., '{"deltas": 5, "text": "Such Very Cool Post"}', ARRAY['30c...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to create post, error: column "owner" is of type uuid but expression is of type text[]
+LINE 1: ..., '{"deltas": 5, "text": "Such Very Cool Post"}', ARRAY['30c...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to login, reason: 'Request' object does not support indexing       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to create post, error: null value in column "id" violates not-null constraint
+DETAIL:  Failing row contains (null, 2012-04-01, Cool Post, {"text": "Such Very Cool Post", "deltas": 5}, f8444c3c-7c3d-11e8-91e8-eb5d9385e961).
+       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Failed to Create User: duplicate key value violates unique constraint "users_email_key"
+DETAIL:  Key (email)=(cookie.monster@zombieland.zom) already exists.
+       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to insert comment: can't adapt type 'dict'       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to insert comment: unsupported format character 'd' (0x64) at index 77       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Unable to insert comment: permission denied for sequence comment_id_seq
+       --
+Unable to parse like request: Expecting ',' delimiter: line 1 column 322 (char 321)       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --
+Connection to database successful! Content       --
+Connection to database successful! Users       --

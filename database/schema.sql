@@ -1,8 +1,10 @@
 DROP TABLE IF EXISTS USERS CASCADE;
 DROP TABLE IF EXISTS POST CASCADE;
-DROP TABLE IF EXISTS OPINION CASCADE;
+DROP TABLE IF EXISTS POST_OPINION CASCADE;
+DROP TABLE IF EXISTS COMMENT_OPINION CASCADE;
 DROP TABLE IF EXISTS COMMENT CASCADE;
 DROP TABLE IF EXISTS ANNOTATION CASCADE;
+
 
 -- To generate unique ID's for posts
 CREATE EXTENSION "uuid-ossp";
@@ -34,7 +36,7 @@ CREATE TABLE USERS (
 );
 
 CREATE TABLE POST (
-    ID UUID PRIMARY KEY,
+    ID UUID PRIMARY KEY DEFAULT uuid_generate_v1mc(),
     -- Id of post
 
     TIME DATE NOT NULL,
@@ -50,35 +52,15 @@ CREATE TABLE POST (
     -- Owner of Post
 );
 
-
-CREATE TABLE OPINION (
-  ID SERIAL PRIMARY KEY,
-  -- Unique identifier
-
-  TARGET UUID,
-  -- UUID of whatever it belongs to.
-
-  BELONG SMALLINT,
-  -- IDENTIFIER OF TYPE IT BELONGS TO
-
-  OWNER UUID REFERENCES users (id),
-  -- UUID of the holder
-
-  STATE BOOLEAN NOT NULL,
-  -- Opinion
-
-  TIME DATE NOT NULL
-);
-
 CREATE TABLE COMMENT (
   ID SERIAL PRIMARY KEY,
   -- Unique identifier
 
-  TARGET UUID,
-  -- UUID of whatever it belongs to.
+  TARGET_POST UUID REFERENCES post (id),
+  -- Post comment belongs to
 
-  BELONG SMALLINT,
-  -- IDENTIFIER OF TYPE IT BELONGS TO
+  PARENT INTEGER REFERENCES COMMENT (id),
+  -- Post parent (Optional)
 
   OWNER UUID REFERENCES users (id),
   -- UUID of the holder
@@ -89,12 +71,43 @@ CREATE TABLE COMMENT (
   TIME DATE NOT NULL
 );
 
+CREATE TABLE COMMENT_OPINION (
+  TARGET INTEGER REFERENCES comment (id),
+  -- UUID of whatever it belongs to.
+
+  OWNER UUID REFERENCES users (id),
+  -- UUID of the holder
+
+  STATE BOOLEAN NOT NULL,
+  -- Opinion
+
+  PRIMARY KEY(TARGET, OWNER)
+  -- So that you cant like multiple times
+);
+
+CREATE TABLE POST_OPINION (
+  TARGET UUID REFERENCES post (id),
+  -- UUID of whatever it belongs to.
+
+  OWNER UUID REFERENCES users (id),
+  -- UUID of the holder
+
+  STATE BOOLEAN NOT NULL,
+  -- Opinion
+
+  PRIMARY KEY(TARGET, OWNER)
+  -- So that you cant like multiple times
+);
+
 CREATE TABLE ANNOTATION (
   ID SERIAL PRIMARY KEY,
   -- Unique identifier
 
-  TARGET UUID REFERENCES post (id),
+  TARGET_POST UUID REFERENCES post (id),
   -- What post it belongs to
+
+  TARGET_COMMENT INTEGER REFERENCES comment (id),
+  -- What comment it belongs to
 
   BEGINING INTEGER NOT NULL,
   -- Begining of annotation
@@ -111,5 +124,7 @@ CREATE USER DELTA WITH PASSWORD '012';
 GRANT SELECT, INSERT, UPDATE, DELETE
 ON ALL TABLES IN SCHEMA public 
 TO delta;
+
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO delta;
 
 -- Add and revoke priveleges here later

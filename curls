@@ -3,3 +3,16 @@ LOGIN_USER: curl 0.0.0.0:5000/profile/login -X POST -d '{"user": "Cookie", "pass
 
 CREATE_USER: curl 0.0.0.0:5000/profile/create -X POST -d '{"user": "Cookie", "password": "COOKIE2", "email": "cookie.monster@zombieland.zom"}'
 
+CREATE_POST: curl 0.0.0.0:5000/posts/create -X POST -d '{"token": TOKEN_HERE, "post": { "title": "Cool Post", "content": {"deltas": 5, "text": "Such Very Cool Post"}}}'
+
+GET_POST: curl 0.0.0.0:5000/posts/ID_HERE
+
+LIKE_POST: curl 0.0.0.0:5000/like -X POST -d '{"token": TOKEN_HERE, "like": { "target_id": POST_ID_HERE, "type": "post", "state": true}}'
+
+LIKE_COMMENT: curl 0.0.0.0:5000/like -X POST -d '{"token": TOKEN_HERE, "like": { "target_id": COMMENT_ID_HERE, "type": "comment", "state": true}}'
+
+CREATE_COMMENT: curl 0.0.0.0:5000/comment -X POST -d '{"token": TOKEN_HERE, "comment": { "target": POST_ID_HERE, "parent": null, "content": {"title": "O such nice post", "text": "WOOOOOO"}}}'
+
+CREATE_ANNOTATION: curl 0.0.0.0:5000/annotate -X POST -d '{"token": TOKEN_HERE, "annotation": { "target_post": POST_ID_HERE, "target_comment": COMMENT_ID_HERE, "begining": 0, "ending": 30, "color": "#00FF00"}}'
+
+
