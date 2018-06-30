@@ -15,7 +15,7 @@ INSERT_ANNO    = "INSERT INTO ANNOTATION (TARGET_POST, TARGET_COMMENT, BEGINING,
 GET_POST       = "SELECT TIME, TITLE, CONTENT, OWNER FROM POST WHERE POST.ID = %s;"
 LIKE_POST      = "INSERT INTO POST_OPINION (TARGET, OWNER, STATE) VALUES (%s, %s, %s);"
 LIKE_COMMENT   = "INSERT INTO COMMENT_OPINION (TARGET, OWNER, STATE) VALUES (%s, %s, %s);"
-
+GET_POSTS      = "SELECT CONTENT FROM POST ORDER BY TIME"
 
 
 @content.route("/posts/create", methods=["POST"])
@@ -75,7 +75,7 @@ def create_post():
     query = connection.Request( "create_post"
                               , INSERT_POST
                               , (TIME, TITLE, psycopg2Json(CONTENT), OWNER)
-                              , lambda c: c.fetchone())
+                              , lambda c: c.fetchall())
     post_id = None
     try:
         post_id = DB.request(query).data[0]
@@ -98,6 +98,34 @@ def create_post():
     response = json.dumps(response)
     return flask.Response(response, status=200, mimetype="application/json")
 
+@content.route("/posts/", methods=["GET"])
+def get_posts():
+    query = connection.Request( "get_posts"
+                                , GET_POSTS
+                                , ()
+                                , lambda c: c.fetchall())
+
+    try:
+        result = DB.request(query).data
+        data = []
+        for r in result:
+            data.append(r[0])
+    except Exception as e:
+        config.write_server_log("Unable to fetch post with id {} reason: {}"\
+                .format(id, str(e)))
+        
+        response = { "success": False
+                    , "posts" : []
+                   }
+
+        response = json.dumps(response)
+        return flask.Response(response, status=200, mimetype="application/json")
+    response = { "success": True
+            , "posts" : data
+            }
+
+    response = json.dumps(response)
+    return flask.Response(response, status=200, mimetype="application/json")
 
 @content.route("/posts/<id>", methods=["GET"])
 def get_post(id):
