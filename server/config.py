@@ -106,4 +106,5 @@ def verify_password(password, sig):
     return compare_digest(good_sig, sig)
 
 
-
+def default_json_serial(obj):
+    return str(obj)
