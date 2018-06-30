@@ -4,6 +4,9 @@ from delta.blueprints.logs     import logs
 from delta.blueprints.users    import users
 
 app = flask.Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 
 app.register_blueprint(content)
 app.register_blueprint(logs)
