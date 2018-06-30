@@ -1,14 +1,19 @@
+asn1crypto==0.24.0
+cffi==1.11.5
 click==6.7
 configparser==3.5.0
+cryptography==1.9
 Flask==1.0.2
+Flask-Cors==3.0.6
 greenlet==0.4.13
+idna==2.7
 itsdangerous==0.24
 Jinja2==2.10
+jwt==0.5.3
 MarkupSafe==1.0
 msgpack==0.5.6
+peewee==3.5.0
 psycopg2==2.7.4
+pycparser==2.18
+six==1.11.0
 Werkzeug==0.14.1
-jwt
-
-
-# neovim==0.2.6

@@ -1,4 +1,5 @@
 import flask
+from flask_cors import CORS, cross_origin
 from delta.blueprints.content  import content
 from delta.blueprints.logs     import logs
 from delta.blueprints.users    import users
