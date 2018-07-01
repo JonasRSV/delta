@@ -9,6 +9,13 @@ from psycopg2.extras import Json as psycopg2Json
 DB = connection.Connection("Content")
 content = flask.Blueprint("Content Blueprint", __name__)
 
+######################################
+#                                    #
+#     ALL BOOTIFUL SQL QUERIES       #
+#                                    #
+######################################
+
+
 INSERT_POST       = "INSERT INTO POST (TIME, TITLE, CONTENT, OWNER) VALUES (%s, %s, %s, %s) RETURNING ID;"
 
 INSERT_COMMENT    = "INSERT INTO COMMENT (TARGET_POST, PARENT, OWNER, CONTENT, TIME) VALUES (%s, %s, %s, %s, %s) RETURNING ID;"
@@ -39,6 +46,12 @@ GET_ANNO_POST     = "SELECT * FROM ANNOTATION WHERE TARGET_POST = %s;"
 
 GET_TAGS_POST     = "SELECT NAME FROM TAG WHERE TAG.TARGET_POST = %s;"
 
+######################################
+#                                    #
+#        GET TAGS ON ID              #
+#                                    #
+######################################
+
 
 @content.route("/tags/<id>", methods=["GET"])
 def get_tags(id):
@@ -55,19 +68,21 @@ def get_tags(id):
         config.write_server_log("Unable to fetch tags for post with id {} reason: {}"\
                 .format(id, str(e)))
 
-        response = { "success": False
-                   , "tags": None
-                   }
-
+        response = { "success": False , "tags": None }
         response = json.dumps(response)
         return flask.Response(response, status=200, mimetype="application/json")
 
-    response = { "success": True
-               , "tags": tags
-               }
-
+    response = { "success": True , "tags": tags }
     response = json.dumps(response)
     return flask.Response(response, status=200, mimetype="application/json")
+
+
+
+######################################
+#                                    #
+#        GET FEED OFF POST           #
+#                                    #
+######################################
 
 @content.route("/feed", methods=["POST"])
 def get_feed():
@@ -115,8 +130,7 @@ def get_feed():
         response = { "success": False
                    , "limit": LIMIT
                    , "time": TIME
-                   , "feed": None
-                   }
+                   , "feed": None }
 
         response = json.dumps(response)
         return flask.Response(response, status=200, mimetype="application/json")
@@ -125,40 +139,24 @@ def get_feed():
     response = { "success": True
                , "limit": LIMIT
                , "time": TIME
-               , "feed": feed
-               }
+               , "feed": feed }
 
     response = json.dumps(response, default=config.default_json_serial)
     return flask.Response(response, status=200, mimetype="application/json")
 
+
+######################################
+#                                    #
+#     GET ANNOTATIONS ON POST        #
+#                                    #
+######################################
     
 @content.route("/like", methods=["GET"])
 def get_likes():
-    ID      = None
-    TYPE    = None
+    ID      = flask.request.args.get("id")
+    TYPE    = flask.request.args.get("type")
 
-    try:
-        request_data = flask.request.get_data().decode("utf-8")
-        request_data = json.loads(request_data)
-
-        ID   = request_data["id"]
-        TYPE = request_data["type"]
-
-    except Exception as e:
-        config.write_server_log("Unable to parse likes request: {}".format(str(e)))
-
-        response = { "success": False
-                   , "id": None
-                   , "type": None
-                   , "likes": None
-                   }
-        response = json.dumps(response)
-        return flask.Response(response, status=200, mimetype="application/json")
-
-    likeables = { "post": GET_LIKES_POST
-                , "comment": GET_LIKES_COMMENT
-                }
-
+    likeables = { "post": GET_LIKES_POST , "comment": GET_LIKES_COMMENT }
 
     if TYPE not in likeables:
         config.write_server_log("No likes on type {}".format(TYPE))
@@ -166,12 +164,9 @@ def get_likes():
         response = { "success": False
                    , "id": ID
                    , "type": TYPE
-                   , "likes": None
-                   }
+                   , "likes": None }
         response = json.dumps(response)
         return flask.Response(response, status=200, mimetype="application/json")
-
-
 
     query = connection.Request( "likes"
                               , likeables[TYPE]
@@ -187,43 +182,33 @@ def get_likes():
         response = { "success": False
                    , "id": ID
                    , "type": TYPE
-                   , "likes": None
-                   }
+                   , "likes": None }
         response = json.dumps(response)
         return flask.Response(response, status=200, mimetype="application/json")
 
     response = { "success": True
                , "id": ID
                , "type": TYPE
-               , "likes": likes
-               }
+               , "likes": likes }
 
     response = json.dumps(response)
     return flask.Response(response, status=200, mimetype="application/json")
 
 
-@content.route("/comment", methods=["GET"])
-def get_comments():
-    POST_ID    = None
 
-    try:
-        request_data = flask.request.get_data().decode("utf-8")
-        request_data = json.loads(request_data)
 
-        POST_ID = request_data["post_id"]
-    except Exception as e:
-        config.write_server_log("Could not parse comments request.")
+######################################
+#                                    #
+#     GET COMMENTS ON POST           #
+#                                    #
+######################################
 
-        response = { "success": False
-                   , "post_id": None
-                   , "comments": None
-                   }
-        response = json.dumps(response)
-        return flask.Response(response, status=200, mimetype="application/json")
 
+@content.route("/comment/<id>", methods=["GET"])
+def get_comments(id):
     query = connection.Request( "comments"
                               , GET_COMMENTS_POST
-                              , (POST_ID, )
+                              , (id, )
                               , fetcher=lambda c: c.fetchall())
 
     comments = None
@@ -233,42 +218,33 @@ def get_comments():
         config.write_server_log("Could not fetch comments from DB.")
 
         response = { "success": False
-                   , "post_id": POST_ID
-                   , "comments": None
-                   }
+                   , "id": id
+                   , "comments": None }
         response = json.dumps(response)
         return flask.Response(response, status=200, mimetype="application/json")
 
     response = { "success": True
-               , "post_id": POST_ID
-               , "comments": comments
-               }
+               , "id": id
+               , "comments": comments }
 
     response = json.dumps(response, default=config.default_json_serial)
     return flask.Response(response, status=200, mimetype="application/json")
 
 
-@content.route("/annotate", methods=["GET"])
-def get_annotations():
-    POST_ID    = None
-    try:
-        request_data = flask.request.get_data().decode("utf-8")
-        request_data = json.loads(request_data)
 
-        POST_ID = request_data["post_id"]
-    except Exception as e:
-        config.write_server_log("Could not parse get annotations request.")
 
-        response = { "success": False
-                   , "post_id": None
-                   , "annotations": None
-                   }
-        response = json.dumps(response)
-        return flask.Response(response, status=200, mimetype="application/json")
+######################################
+#                                    #
+#     GET ANNOTATIONS ON POST        #
+#                                    #
+######################################
 
+
+@content.route("/annotate/<id>", methods=["GET"])
+def get_annotations(id):
     query = connection.Request( "annotations"
                               , GET_ANNO_POST
-                              , (POST_ID, )
+                              , (id, )
                               , fetcher=lambda c: c.fetchall())
 
     annotations = None
@@ -278,21 +254,26 @@ def get_annotations():
         config.write_server_log("Could not fetch annotations from DB.")
 
         response = { "success": False
-                   , "post_id": POST_ID
-                   , "annotations": None
-                   }
+                   , "post_id": id
+                   , "annotations": None }
         response = json.dumps(response)
         return flask.Response(response, status=200, mimetype="application/json")
 
     response = { "success": True
                , "post_id": POST_ID
-               , "annotations": annotations
-               }
+               , "annotations": annotations }
 
     response = json.dumps(response)
     return flask.Response(response, status=200, mimetype="application/json")
 
 
+
+
+######################################
+#                                    #
+#        CREATE A POST               #
+#                                    #
+######################################
 
 
 @content.route("/posts/create", methods=["POST"])
@@ -385,6 +366,13 @@ def create_post():
     return flask.Response(response, status=200, mimetype="application/json")
 
 
+
+######################################
+#                                    #
+#        GET POST ON ID              #
+#                                    #
+######################################
+
 @content.route("/posts/<id>", methods=["GET"])
 def get_post(id):
     query = connection.Request( "get_post"
@@ -423,6 +411,13 @@ def get_post(id):
     response = json.dumps(response)
     return flask.Response(response, status=200, mimetype="application/json")
 
+
+
+######################################
+#                                    #
+#        INSERTING LIKE              #
+#                                    #
+######################################
 
 @content.route("/like", methods=["POST"])
 def like():
@@ -502,6 +497,13 @@ def like():
     return flask.Response(response, status=200, mimetype="application/json")
 
 
+
+######################################
+#                                    #
+#        INSERTING COMMENT           #
+#                                    #
+######################################
+
 @content.route("/comment", methods=["POST"])
 def comment():
     session_token   = None
@@ -520,7 +522,7 @@ def comment():
         session_token    = request_data["token"]
         comment_request  = request_data["comment"]
 
-        TARGET_POST      = request_data["comment"]["target"]
+        TARGET_POST      = request_data["comment"]["target_id"]
         PARENT_COMMENT   = request_data["comment"]["parent"]
         CONTENT          = request_data["comment"]["content"]
 
@@ -588,6 +590,12 @@ def comment():
     response = json.dumps(response)
     return flask.Response(response, status=200, mimetype="application/json")
 
+
+######################################
+#                                    #
+#        INSERTING ANNOTATIONS       #
+#                                    #
+######################################
 
 @content.route("/annotate", methods=["POST"])
 def annotate():
