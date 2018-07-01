@@ -37,6 +37,37 @@ GET_COMMENTS_POST = "SELECT * FROM COMMENT WHERE TARGET_POST = %s;"
 
 GET_ANNO_POST     = "SELECT * FROM ANNOTATION WHERE TARGET_POST = %s;"
 
+GET_TAGS_POST     = "SELECT NAME FROM TAG WHERE TAG.TARGET_POST = %s;"
+
+
+@content.route("/tags/<id>", methods=["GET"])
+def get_tags(id):
+    query = connection.Request( "get_tags"
+                              , GET_TAGS_POST
+                              , (id, )
+                              , lambda c: c.fetchall())
+    
+
+    tags = None
+    try:
+        tags = DB.request(query).data
+    except Exception as e:
+        config.write_server_log("Unable to fetch tags for post with id {} reason: {}"\
+                .format(id, str(e)))
+
+        response = { "success": False
+                   , "tags": None
+                   }
+
+        response = json.dumps(response)
+        return flask.Response(response, status=200, mimetype="application/json")
+
+    response = { "success": True
+               , "tags": tags
+               }
+
+    response = json.dumps(response)
+    return flask.Response(response, status=200, mimetype="application/json")
 
 @content.route("/feed", methods=["POST"])
 def get_feed():
