@@ -10,22 +10,39 @@ DB = connection.Connection("Content")
 content = flask.Blueprint("Content Blueprint", __name__)
 
 INSERT_POST       = "INSERT INTO POST (TIME, TITLE, CONTENT, OWNER) VALUES (%s, %s, %s, %s) RETURNING ID;"
+
 INSERT_COMMENT    = "INSERT INTO COMMENT (TARGET_POST, PARENT, OWNER, CONTENT, TIME) VALUES (%s, %s, %s, %s, %s) RETURNING ID;"
+
 INSERT_ANNO       = "INSERT INTO ANNOTATION (TARGET_POST, TARGET_COMMENT, BEGINING, ENDING, COLOR) VALUES (%s, %s, %s, %s, %s) RETURNING ID;"
+
+INSERT_TAG        = "INSERT INTO TAG (NAME, TARGET_POST) VALUES (%s, %s);"
+
 GET_POST          = "SELECT TIME, TITLE, CONTENT, OWNER FROM POST WHERE POST.ID = %s;"
+
 LIKE_POST         = "INSERT INTO POST_OPINION (TARGET, OWNER, STATE) VALUES (%s, %s, %s);"
+
 LIKE_COMMENT      = "INSERT INTO COMMENT_OPINION (TARGET, OWNER, STATE) VALUES (%s, %s, %s);"
+
 GET_POSTS_TIME    = "SELECT * FROM POST WHERE POST.TIME <= %s ORDER BY POST.TIME LIMIT %s;"
+
+GET_POSTS_TIME_T  = "SELECT POST.ID, POST.TIME, POST.TITLE, POST.CONTENT, POST.OWNER"\
+                  + " FROM POST JOIN TAG ON TAG.TARGET_POST = POST.ID"\
+                  + " WHERE POST.TIME <= %s AND TAG.NAME IN %s ORDER BY POST.TIME LIMIT %s;"
+
 GET_LIKES_POST    = "SELECT * FROM POST_OPINION WHERE TARGET = %s;"
+
 GET_LIKES_COMMENT = "SELECT * FROM COMMENT_OPINION WHERE TARGET = %s;"
+
 GET_COMMENTS_POST = "SELECT * FROM COMMENT WHERE TARGET_POST = %s;"
+
 GET_ANNO_POST     = "SELECT * FROM ANNOTATION WHERE TARGET_POST = %s;"
 
 
-@content.route("/feed", methods=["GET"])
+@content.route("/feed", methods=["POST"])
 def get_feed():
     LIMIT = None
     TIME  = None
+    TAGS  = None
 
     try:
         request_data = flask.request.get_data().decode("utf-8")
@@ -33,6 +50,7 @@ def get_feed():
 
         LIMIT = request_data["limit"]
         TIME  = request_data["time"]
+        TAGS  = request_data["tags"]
     except Exception as e:
         config.write_server_log("Unable to parse posts request: {}".format(str(e)))
 
@@ -47,11 +65,17 @@ def get_feed():
 
 
 
-    query = connection.Request( "get_posts"
-                              , GET_POSTS_TIME
-                              , (TIME, LIMIT)
-                              , lambda c: c.fetchall())
-
+    if TAGS is None:
+        query = connection.Request( "get_posts"
+                                  , GET_POSTS_TIME
+                                  , (TIME, LIMIT)
+                                  , lambda c: c.fetchall())
+    else:
+        query = connection.Request( "get_posts"
+                                  , GET_POSTS_TIME_T
+                                  , (TIME, tuple(TAGS), LIMIT)
+                                  , lambda c: c.fetchall())
+        
     feed = None
     try:
         feed = DB.request(query).data
@@ -249,6 +273,8 @@ def create_post():
     TITLE            = None
     CONTENT          = None
     OWNER            = None
+    TAGS             = None
+
     try:
         request_data = flask.request.get_data().decode("utf-8")
         request_data = json.loads(request_data)
@@ -258,6 +284,7 @@ def create_post():
 
         TITLE             = request_data["post"]["title"]
         CONTENT           = request_data["post"]["content"]
+        TAGS              = request_data["post"]["tags"]
     except Exception as e:
         config.write_server_log("Unable to parse post request: {}".format(str(e)))
 
@@ -301,6 +328,12 @@ def create_post():
     post_id = None
     try:
         post_id = DB.request(query).data[0]
+
+        for tag in TAGS:
+            query = connection.Request( "create_tag"
+                                      , INSERT_TAG
+                                      , (tag, post_id))
+            DB.request(query)
     except Exception as e:
         config.write_server_log("Unable to create post, error: {}".format(str(e)))
 

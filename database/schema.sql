@@ -119,6 +119,18 @@ CREATE TABLE ANNOTATION (
   -- Hexadecimal color of Annotation (Might be fun?)
 );
 
+
+CREATE TABLE TAG (
+  NAME VARCHAR(255).
+  -- Name of Tag
+
+  TARGET_POST UUID REFERENCES post (id),
+  -- Connects to post
+
+  PRIMARY KEY(NAME, TARGET_POST)
+  -- No duplicate tags on posts
+);
+
 CREATE USER DELTA WITH PASSWORD '012';
 
 GRANT SELECT, INSERT, UPDATE, DELETE
