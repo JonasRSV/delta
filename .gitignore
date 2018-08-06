@@ -9,3 +9,4 @@ logs/server.log
 server/secrets/private.pem
 server/secrets/public.pem
 server/secrets/hash.key
+Test.pem
